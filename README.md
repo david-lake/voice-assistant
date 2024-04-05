@@ -44,6 +44,6 @@ export ELEVENLABS_API_KEY=<your_api_key>
 Run the script using Python:
 
 ```bash
-python voice_assistant.py
+python main.py
  ```
 Speak into your microphone when prompted, and the Voice Assistant will transcribe your speech, send it to the GPT model for processing, and play back the generated response.
