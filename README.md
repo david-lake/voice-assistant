@@ -8,15 +8,15 @@ Before running the script, ensure you have the following installed:
 
 - Python 3.x
 - Pip (Python package installer)
-- OpenAI API key
-- ElevenLabs API key
+- [OpenAI API key]([https://link-url-here.org](https://platform.openai.com/docs/overview))
+- [ElevenLabs API key]([https://link-url-here.org](https://elevenlabs.io/))
 
 ## Installation
 
 1. **Clone the repository:**
 
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/david-lake/voice-assistant.git
     ```
 
 2. **Navigate to the project directory:**
