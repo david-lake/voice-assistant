@@ -35,15 +35,15 @@ Before running the script, ensure you have the following installed:
 
 Set up the environment variables for the required API keys. These keys are required to authenticate requests to the GPT and ElevenLabs.
 
-    ```bash
-    export OPENAI_API_KEY=<your_api_key>
-    export ELEVENLABS_API_KEY=<your_api_key>
-    ```
+```bash
+export OPENAI_API_KEY=<your_api_key>
+export ELEVENLABS_API_KEY=<your_api_key>
+```
 ## Usage
 
 Run the script using Python:
 
-    ```bash
-    python voice_assistant.py
-    ```
+```bash
+python voice_assistant.py
+ ```
 Speak into your microphone when prompted, and the Voice Assistant will transcribe your speech, send it to the GPT model for processing, and play back the generated response.
