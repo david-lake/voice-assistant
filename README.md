@@ -8,8 +8,8 @@ Before running the script, ensure you have the following installed:
 
 - Python 3.x
 - Pip (Python package installer)
-- [OpenAI API key]([https://link-url-here.org](https://platform.openai.com/docs/overview))
-- [ElevenLabs API key]([https://link-url-here.org](https://elevenlabs.io/))
+- [OpenAI API key](https://platform.openai.com/docs/overview)
+- [ElevenLabs API key](https://elevenlabs.io/)
 
 ## Installation
 
