@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import wx
 import os
 import sys
 import asyncio
@@ -14,7 +15,7 @@ import speech_recognition as sr
 # Define API keys and voice ID
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 ELEVENLABS_API_KEY = os.environ.get('ELEVENLABS_API_KEY')
-VOICE_ID = '21m00Tcm4TlvDq8ikWAM'
+VOICE_ID = 'EXAVITQu4vr4xnSDxMaL'
 
 # Check for presents of Open AI API key
 if OPENAI_API_KEY is  None:
@@ -35,7 +36,7 @@ def is_installed(lib_name):
     return shutil.which(lib_name) is not None
 
 async def text_chunker(chunks):
-    # Split text into chunks, ensuring to not break sentences.
+    # Split text into chunks, ensuring not to break sentences.
     splitters = (".", ",", "?", "!", ";", ":", "—", "-", "(", ")", "[", "]", "}", " ")
     buffer = ""
 
@@ -54,7 +55,6 @@ async def text_chunker(chunks):
 
 async def stream(audio_stream):
     # Stream audio data using mpv player.
-    print(audio_stream)
     if not is_installed("mpv"):
         raise ValueError(
             "mpv not found, necessary to stream audio. "
@@ -122,23 +122,37 @@ async def chat_completion(query):
 
     await text_to_speech_input_streaming(VOICE_ID, text_iterator())
 
-# Main execution
+class MainFrame(wx.Frame):
+    def __init__(self):
+        super().__init__(None, title="Voice Assistant", size=(200, 150))
+        self.panel = wx.Panel(self)
+        self.listen_button = wx.Button(self.panel, label="Listen", pos=(50, 50), size=(100, 50))
+        self.listen_button.Bind(wx.EVT_BUTTON, self.handle_speech)
+    
+    def handle_speech(self, event):
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.run_speech_recognition())
+
+    async def run_speech_recognition(self):
+        with sr.Microphone() as source:
+            print("Listening...")
+            audio = recognizer.listen(source, phrase_time_limit=5)
+
+        try:
+            print("Recognizing...")
+            prompt = recognizer.recognize_google(audio)
+        except sr.UnknownValueError:
+            print("Sorry, I didn't understand that.")
+        except sr.RequestError:
+            print("Sorry, there was an issue with the speech recognition service.")
+
+        if prompt is not None:
+            print(prompt)
+            await chat_completion(prompt)
+            prompt = None
+
 if __name__ == "__main__":
-    while(1):
-      # obtain audio from the microphone
-      with sr.Microphone() as source:
-          print("Listening...")
-          audio = recognizer.listen(source, phrase_time_limit=5)
-
-      try:
-          print("Recognizing...")
-          prompt = recognizer.recognize_google(audio)
-      except sr.UnknownValueError:
-          print("Sorry, I didn't understand that.")
-      except sr.RequestError:
-          print("Sorry, there was an issue with the speech recognition service.")
-
-      if prompt != None:
-        print(prompt)
-        asyncio.run(chat_completion(prompt))
-        prompt = None
+    app = wx.App(False)
+    frame = MainFrame()
+    frame.Show()
+    app.MainLoop()
