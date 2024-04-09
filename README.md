@@ -8,6 +8,7 @@ Before running the script, ensure you have the following installed:
 
 - Python 3.x
 - Pip (Python package installer)
+- mpv (media player)
 - [OpenAI API key](https://platform.openai.com/docs/overview)
 - [ElevenLabs API key](https://elevenlabs.io/)
 
@@ -30,6 +31,18 @@ Before running the script, ensure you have the following installed:
     ```bash
     pip install -r requirements.txt
     ```
+
+4. **Install the `mpv` media player:**
+
+   ```bash
+   # For Ubuntu/Debian
+   sudo apt-get install mpv
+
+   # For macOS (using Homebrew)
+   brew install mpv
+
+   # For Windows (using Chocolatey)
+   choco install mpv
 
 ## Configuration
 
