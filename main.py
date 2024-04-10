@@ -30,7 +30,6 @@ if ELEVENLABS_API_KEY is  None:
 # Set OpenAI API key
 aclient = AsyncOpenAI(api_key=OPENAI_API_KEY)
 recognizer = sr.Recognizer()
-prompt = None
 
 def is_installed(lib_name):
     return shutil.which(lib_name) is not None
@@ -125,9 +124,23 @@ async def chat_completion(query):
 class MainFrame(wx.Frame):
     def __init__(self):
         super().__init__(None, title="Voice Assistant", size=(200, 150))
+        microphone_icon = wx.Image("microphone_icon.png", wx.BITMAP_TYPE_ANY)
+        microphone_icon = microphone_icon.Scale(50, 50, wx.IMAGE_QUALITY_HIGH)
+
         self.panel = wx.Panel(self)
-        self.listen_button = wx.Button(self.panel, label="Listen", pos=(50, 50), size=(100, 50))
+        self.microphone_icon = wx.Bitmap(microphone_icon)
+        self.listen_button = wx.BitmapButton(self.panel, id=wx.ID_ANY, bitmap=self.microphone_icon, pos=(50, 100))
         self.listen_button.Bind(wx.EVT_BUTTON, self.handle_speech)
+
+        # Create a box sizer to center the button
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.AddStretchSpacer()  # Add stretchable space above the button
+        sizer.Add(self.listen_button, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL)
+        sizer.AddStretchSpacer()  # Add stretchable space below the button
+        
+        # Set the panel sizer
+        self.panel.SetSizer(sizer)
+        self.Center()
     
     def handle_speech(self, event):
         loop = asyncio.get_event_loop()
